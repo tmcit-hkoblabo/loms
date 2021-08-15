@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:loms2/authentication/login_completion.dart';
-//import 'package:loms2/authentication/logout_page.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginPage extends StatelessWidget {
   static final googleLogin = GoogleSignIn(scopes: [
@@ -17,32 +17,36 @@ class LoginPage extends StatelessWidget {
         title: Text('サインイン'),
       ),
       body: Center(
-        child: TextButton(
-          onPressed: () async {
-            GoogleSignInAccount? signinAccount = await googleLogin.signIn();
-            if (signinAccount == null) return;
-            GoogleSignInAuthentication auth =
-                await signinAccount.authentication;
-            final OAuthCredential credential = GoogleAuthProvider.credential(
-              idToken: auth.idToken,
-              accessToken: auth.accessToken,
-            );
-            User? user =
-                (await FirebaseAuth.instance.signInWithCredential(credential))
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SignInButton(
+              Buttons.Google,
+              text: 'Sign In with Google',
+              onPressed: () async {
+                GoogleSignInAccount? signinAccount = await googleLogin.signIn();
+                if (signinAccount == null) return;
+                GoogleSignInAuthentication auth =
+                    await signinAccount.authentication;
+                final OAuthCredential credential =
+                    GoogleAuthProvider.credential(
+                  idToken: auth.idToken,
+                  accessToken: auth.accessToken,
+                );
+                User? user = (await FirebaseAuth.instance
+                        .signInWithCredential(credential))
                     .user;
-            if (user != null) {
-              await Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) {
-                  //return LogoutPage(user);
-                  return LoginCompletion(user);
-                }),
-              );
-            }
-          },
-          child: Text(
-            'login',
-            style: TextStyle(fontSize: 50),
-          ),
+                if (user != null) {
+                  await Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) {
+                      //return LogoutPage(user);
+                      return LoginCompletion(user);
+                    }),
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

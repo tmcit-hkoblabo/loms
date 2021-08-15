@@ -1,5 +1,10 @@
 # loms2
 
+東京都立産業技術高等専門学校
+ものづくり工学科電気電子工学コース　小林研究室
+2021年度卒業研究
+「BLEを用いた校内所在管理システムの開発」
+
 A new Flutter project.
 
 ## Getting Started

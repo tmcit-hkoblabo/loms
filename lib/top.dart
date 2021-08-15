@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'main.dart';
+import 'package:loms2/welcome_page.dart';
 
 class TopPage extends StatelessWidget {
   static final googleLogin = GoogleSignIn(scopes: <String>[
@@ -51,10 +51,10 @@ class TopPage extends StatelessWidget {
                 //setState(() => _city = 'Honolulu, HI');
                 //Navigator.pop(context);
                 FirebaseAuth.instance.signOut();
-                await googleLogin.signIn();
+                //await googleLogin.signIn();
                 await Navigator.of(context)
                     .pushReplacement(MaterialPageRoute(builder: (context) {
-                  return MyApp();
+                  return WelcomePage();
                 }));
               },
             ),

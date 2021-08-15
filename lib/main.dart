@@ -67,7 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:loms2/authentication/login_page.dart';
+//import 'package:loms2/authentication/login_page.dart';
+import 'package:loms2/welcome_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(),
+      home: WelcomePage(),
     );
   }
 }

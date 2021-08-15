@@ -1,7 +1,6 @@
 import 'package:loms2/authentication/add_mydata.dart';
 //import 'package:loms2/authentication/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:loms2/main.dart';
 import 'package:loms2/top.dart';
 //import 'package:loms2/top.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +32,7 @@ class LoginCompletion extends StatelessWidget {
                 children: <Widget>[
                   Text("あなたのメールアドレスは ${user.email}"),
 
-                  //add_mydataへemail等のデータを送る
-
+                  /*
                   TextButton(
                     onPressed: () async {
                       FirebaseAuth.instance.signOut();
@@ -46,6 +44,7 @@ class LoginCompletion extends StatelessWidget {
                     },
                     child: Text('Logout', style: TextStyle(fontSize: 50)),
                   ),
+                  */
 
                   TextField(
                     decoration: InputDecoration(
