@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "64187841842",
+    "project_id": "tmcit-loms",
+    "storage_bucket": "tmcit-loms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64187841842:android:9dab840517de9021a6eb2b",
+        "android_client_info": {
+          "package_name": "jp.ac.metrocit.loms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64187841842-ogqs7spvpteaq1rtprcb2cab9avqsel5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jp.ac.metrocit.loms",
+            "certificate_hash": "e38740c4b20f96f060e8101c4923560731075d4f"
+          }
+        },
+        {
+          "client_id": "64187841842-4evsrqnpkt6hlld97kn096tduj15cfrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuLkMv5okJ-Ncx65aFQ80dnjvcz8KTxwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64187841842-4evsrqnpkt6hlld97kn096tduj15cfrt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "64187841842-d1d39hcdmnginj707ahpvt7uqufnuru7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.ac.metrocit.loms"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
