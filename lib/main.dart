@@ -67,8 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-//import 'package:loms2/authentication/login_page.dart';
+import 'package:loms2/authentication/auth_check.dart';
+import 'package:loms2/top_page.dart';
 import 'package:loms2/welcome_page.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,13 +81,88 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => AuthCheck(),
+      child: MaterialApp(
+        title: 'TMCIT LoMS',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: LoginCheck(),
+        /*
+        builder: (BuildContext context, Widget child) {
+          return FlutterEasyLoading(child: child);
+        },*/
+      ),
+    );
+  }
+}
+
+class LoginCheck extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bool _loggedIn = context.watch<AuthCheck>().loggedIn;
+
+    return _loggedIn
+        ? TopPage(
+            //title: 'カウンター',
+            )
+        : WelcomePage();
+  }
+}
+
+/*
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TMCIT LoMS',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: WelcomePage(),
+      home: RoutePage(),
     );
   }
 }
+
+class RoutePage extends StatefulWidget {
+  @override
+  RoutePageState createState() => RoutePageState();
+}
+
+class RoutePageState extends State<RoutePage> {
+  //final AuthService _auth = AuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  bool isLoggedin = false;
+  @override
+  void initState() {
+    super.initState();
+    print("Init state");
+    _auth.signInWithPopup(provider).then((value) {
+      if (value == 'null') {
+        print(isLoggedin);
+        setState(() {
+          isLoggedin = false;
+        });
+      } else if (value != null) {
+        setState(() {
+          isLoggedin = true;
+        });
+      } else {
+        setState(() {
+          isLoggedin = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isLoggedin == true ? TopPage() : WelcomePage();
+  }
+}
+*/

@@ -22,7 +22,7 @@ class WelcomePage extends StatelessWidget {
                 );
               },
               child: Text(
-                'login',
+                'Login',
                 style: TextStyle(fontSize: 20),
               ),
             ),
