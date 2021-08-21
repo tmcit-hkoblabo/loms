@@ -26,6 +26,7 @@ class TopPage extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
+            /*
             DrawerHeader(
               child: Text(
                 'My App',
@@ -37,6 +38,16 @@ class TopPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
+            ),
+            */
+            UserAccountsDrawerHeader(
+              currentAccountPicture: ClipOval(
+                child: Image(
+                    image: AssetImage('loms2/assets/kumamon.jpg'),
+                    fit: BoxFit.cover),
+              ),
+              accountName: Text('Belajar Flutter'),
+              accountEmail: Text('hallo@belajarflutter.com'),
             ),
             ListTile(
               title: Text('マイページ'),
