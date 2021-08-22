@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "64187841842-ncg5sn0ll77ejmsgu00dgtr6359s5i9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jp.ac.metrocit.loms",
+            "certificate_hash": "0a826839b3882802fb145856c0f2646886875df9"
+          }
+        },
+        {
           "client_id": "64187841842-ogqs7spvpteaq1rtprcb2cab9avqsel5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
