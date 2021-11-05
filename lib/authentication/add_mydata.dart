@@ -11,11 +11,11 @@ class AddMyData extends ChangeNotifier {
 
   Future addMyData() async {
     if (furigana == null || furigana == "") {
-      throw 'タイトルが入力されていません';
+      throw 'ふりがなが入力されていません';
     }
 
     if (position == null || position!.isEmpty) {
-      throw '著者が入力されていません';
+      throw '役職が入力されていません';
     }
 
     // firestoreに追加
