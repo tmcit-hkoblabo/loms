@@ -14,6 +14,8 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text("ようこそ！TMCIT LoMSへ"),
+            Text("Googleアカウントによる登録作業を行います"),
+            Text("恵比寿"),
             TextButton(
               onPressed: () async {
                 Navigator.push(

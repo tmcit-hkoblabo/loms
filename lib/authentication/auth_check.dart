@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+//userがログインしているかどうか確認
+//自動ログイン機能
 class AuthCheck extends ChangeNotifier {
   User? _user;
 

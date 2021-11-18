@@ -64,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 */
-
+/*
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loms2/authentication/auth_check.dart';
@@ -98,20 +99,28 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+*/
+//class LoginCheck extends StatelessWidget {
+//ここでまずログインしているかどうかの確認
 
-class LoginCheck extends StatelessWidget {
+//User? user;
+//LoginCheck(this.user);
+
+//const LoginCheck({Key? key, required this.user}) : super(key: key);
+/*
   @override
   Widget build(BuildContext context) {
+    //ここprovider使ってる↓
     final bool _loggedIn = context.watch<AuthCheck>().loggedIn;
 
-    return _loggedIn
-        ? TopPage(
-            //title: 'カウンター',
-            )
-        : WelcomePage();
+    if (_loggedIn) {
+      return TopPage();
+    } else {
+      return WelcomePage();
+    }
   }
 }
-
+*/
 /*
 class MyApp extends StatelessWidget {
   @override
@@ -166,3 +175,24 @@ class RoutePageState extends State<RoutePage> {
   }
 }
 */
+
+//NEW
+import 'package:loms2/top/top_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'TMCIT LoMS',
+      home: TopPage(),
+    );
+  }
+}
