@@ -8,6 +8,8 @@ class LoginModel extends ChangeNotifier {
   final authorController = TextEditingController();
   final furiganaController = TextEditingController();
   final positionController = TextEditingController();
+  final numberController = TextEditingController();
+  final belongController = TextEditingController();
 
   String? name;
   String? email;
@@ -15,6 +17,8 @@ class LoginModel extends ChangeNotifier {
   String? image;
   String? furigana;
   String? position;
+  String? number;
+  String? belong;
   String? password;
 
   bool isLoading = false;
@@ -48,6 +52,18 @@ class LoginModel extends ChangeNotifier {
 
   void setPosition(String position) {
     this.position = position;
+    notifyListeners();
+  }
+
+  void setNumber(String number) {
+    this.number = number;
+    belong = null;
+    notifyListeners();
+  }
+
+  void setBelong(String belong) {
+    this.belong = belong;
+    number = null;
     notifyListeners();
   }
 
@@ -129,6 +145,8 @@ class LoginModel extends ChangeNotifier {
   Future addMyData() async {
     this.furigana = furiganaController.text;
     this.position = positionController.text;
+    this.number = numberController.text;
+    this.belong = belongController.text;
 
     if (furigana == null || furigana == "") {
       throw 'ふりがなが入力されていません';
@@ -138,6 +156,14 @@ class LoginModel extends ChangeNotifier {
       throw '役職が入力されていません';
     }
 
+    if (position == '学生' && (number == null || number == "")) {
+      throw '学生番号が入力されていません';
+    }
+
+    if (position == '教員' && (belong == null || belong == "")) {
+      throw '所属学科が入力されていません';
+    }
+
     // firestoreに追加
     await FirebaseFirestore.instance.collection('users').doc(uid).set({
       'name': name,
@@ -145,7 +171,9 @@ class LoginModel extends ChangeNotifier {
       'uid': uid,
       'image': image,
       'furigana': furigana,
-      'position': position
+      'position': position,
+      'number': number,
+      'belong': belong,
     });
 
     //return TopPage2;

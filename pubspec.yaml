@@ -37,6 +37,7 @@ dependencies:
   rxdart: ^0.27.1
   shared_preferences: ^2.0.8
   quiver: ^3.0.0-nullsafety
+  flutter_slidable: ^1.1.0
 
 dev_dependencies:
   flutter_test:

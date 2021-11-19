@@ -146,6 +146,32 @@ class LoginPage extends StatelessWidget {
                       SizedBox(
                         height: 16,
                       ),
+                      if (model.position == '学生')
+                        TextField(
+                          controller: model.numberController,
+                          decoration: InputDecoration(
+                            hintText: '学生番号',
+                          ),
+                          onChanged: (text) {
+                            model.setNumber(text);
+                          },
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (model.position == '教員')
+                        TextField(
+                          controller: model.belongController,
+                          decoration: InputDecoration(
+                            hintText: '所属学科',
+                          ),
+                          onChanged: (text) {
+                            model.setBelong(text);
+                          },
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       ElevatedButton(
                         onPressed: () async {
                           model.name = user.displayName;

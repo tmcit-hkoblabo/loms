@@ -20,7 +20,13 @@ class MyPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          EditProfilePage(model.name!, model.description!),
+                          //EditProfilePage(model.name!, model.description!),
+                          EditProfilePage(
+                              model.description.toString(),
+                              model.furigana.toString(),
+                              model.position.toString(),
+                              model.number.toString(),
+                              model.belong.toString()),
                     ),
                   );
                   model.fetchUser();
@@ -46,6 +52,11 @@ class MyPage extends StatelessWidget {
                         ),
                       ),
                       Text(model.email ?? 'メールアドレスなし'),
+                      Text(model.position ?? '教員？学生？'),
+                      if (model.position == '学生')
+                        Text(model.number ?? '学生番号なし'),
+                      if (model.position == '教員')
+                        Text(model.belong ?? '所属学科なし'),
                       Text(
                         model.description ?? '自己紹介なし',
                       ),

@@ -7,6 +7,11 @@ class MyModel extends ChangeNotifier {
   String? name;
   String? email;
   String? description;
+  String? furigana;
+  String? position;
+  String? number;
+  String? belong;
+  String? status;
 
   void startLoading() {
     isLoading = true;
@@ -28,8 +33,11 @@ class MyModel extends ChangeNotifier {
     final data = snapshot.data();
     this.name = data?['name'];
     this.description = data?['description'];
-
-    notifyListeners();
+    this.furigana = data?['furigana'];
+    this.position = data?['position'];
+    this.number = data?['number'];
+    this.belong = data?['belong'];
+    //this.status = data?['status'];
   }
 
   Future logout() async {

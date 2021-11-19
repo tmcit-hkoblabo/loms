@@ -5,7 +5,7 @@
 import 'package:loms2/mypage/my_page.dart';
 import 'package:loms2/top/top_model.dart';
 //import 'package:loms2/domain/book.dart';
-//import 'package:book_list_sample/edit_book/edit_book_page.dart';
+//import 'package:loms2/edit_book/edit_book_page.dart';
 import 'package:loms2/login/login_page.dart';
 //import 'package:book_list_sample/mypage/my_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,16 +50,17 @@ class TopPage extends StatelessWidget {
             ),
           ],
         ),
+
         /*
         body: Center(
-          child: Consumer<TopModel>(builder: (context, model, child) {
+          child: Consumer<BookListModel>(builder: (context, model, child) {
             final List<Book>? books = model.books;
 
             if (books == null) {
               return CircularProgressIndicator();
             }
 
-            final List widgets = books
+            final List<Widget> widgets = books
                 .map(
                   (book) => Slidable(
                     actionPane: SlidableDrawerActionPane(),

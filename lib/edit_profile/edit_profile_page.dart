@@ -3,16 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatelessWidget {
-  EditProfilePage(this.name, this.description);
-  final String name;
+  //EditProfilePage(this.name, this.description);
+  EditProfilePage(
+      this.description, this.furigana, this.position, this.number, this.belong);
+  //final String name;
   final String description;
+  final String furigana;
+  final String position;
+  final String number;
+  final String belong;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<EditProfileModel>(
       create: (_) => EditProfileModel(
-        name,
+        //name,
         description,
+        furigana,
+        position,
+        number,
+        belong,
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -24,6 +34,7 @@ class EditProfilePage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
+                  /*
                   TextField(
                     controller: model.nameController,
                     decoration: InputDecoration(
@@ -36,9 +47,11 @@ class EditProfilePage extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
+                  */
                   TextField(
                     controller: model.descriptionController,
                     decoration: InputDecoration(
+                      //hintText: '${model.description}',
                       hintText: '自己紹介',
                     ),
                     onChanged: (text) {
@@ -47,6 +60,56 @@ class EditProfilePage extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 16,
+                  ),
+                  TextField(
+                    controller: model.furiganaController,
+                    decoration: InputDecoration(
+                      hintText: 'ふりがな',
+                    ),
+                    onChanged: (text) {
+                      model.setFurigana(text);
+                    },
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  TextField(
+                    controller: model.positionController,
+                    decoration: InputDecoration(
+                      hintText: '教員or学生',
+                    ),
+                    onChanged: (text) {
+                      model.setPosition(text);
+                    },
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  if (model.position == '学生')
+                    TextField(
+                      controller: model.numberController,
+                      decoration: InputDecoration(
+                        hintText: '学生番号',
+                      ),
+                      onChanged: (text) {
+                        model.setNumber(text);
+                      },
+                    ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  if (model.position == '教員')
+                    TextField(
+                      controller: model.belongController,
+                      decoration: InputDecoration(
+                        hintText: '所属学科',
+                      ),
+                      onChanged: (text) {
+                        model.setBelong(text);
+                      },
+                    ),
+                  SizedBox(
+                    height: 8,
                   ),
                   ElevatedButton(
                     onPressed: model.isUpdated()
