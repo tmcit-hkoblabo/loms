@@ -179,6 +179,8 @@ class LoginPage extends StatelessWidget {
                           model.uid = user.uid;
                           model.image = user.photoURL;
 
+                          model.setBleLocation();
+                          //model.setStatus();
                           model.startLoading();
                           // 追加の処理
                           try {

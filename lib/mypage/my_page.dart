@@ -1,3 +1,4 @@
+import 'package:loms2/ble/ble_model.dart';
 import 'package:loms2/edit_profile/edit_profile_page.dart';
 import 'package:loms2/mypage/my_model.dart';
 import 'package:flutter/material.dart';
@@ -19,15 +20,14 @@ class MyPage extends StatelessWidget {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          //EditProfilePage(model.name!, model.description!),
-                          EditProfilePage(
-                              model.description.toString(),
-                              model.furigana.toString(),
-                              model.position.toString(),
-                              model.number.toString(),
-                              model.belong.toString()),
-                    ),
+                        builder: (context) =>
+                            //EditProfilePage(model.name!, model.description!),
+                            EditProfilePage(
+                                model.description.toString(),
+                                model.furigana.toString(),
+                                model.position.toString(),
+                                model.number.toString(),
+                                model.belong.toString())),
                   );
                   model.fetchUser();
                 },
@@ -53,13 +53,21 @@ class MyPage extends StatelessWidget {
                       ),
                       Text(model.email ?? 'メールアドレスなし'),
                       Text(model.position ?? '教員？学生？'),
+
                       if (model.position == '学生')
                         Text(model.number ?? '学生番号なし'),
                       if (model.position == '教員')
                         Text(model.belong ?? '所属学科なし'),
+
                       Text(
                         model.description ?? '自己紹介なし',
                       ),
+
+                      Text(
+                        model.status ?? '所在情報なし',
+                      ),
+
+                      //ここに所在情報も一旦表示させるようにする
                       TextButton(
                         onPressed: () async {
                           // ログアウト
@@ -67,6 +75,20 @@ class MyPage extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         child: Text('ログアウト'),
+                      ),
+
+                      TextButton(
+                        onPressed: () async {
+                          // ログアウト
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FlutterBlueApp(),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                        },
+                        child: Text('BLE'),
                       )
                     ],
                   ),

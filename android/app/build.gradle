@@ -25,6 +25,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+//apply plugin: 'com.google.protobuf'
 
 android {
     compileSdkVersion 30
@@ -60,4 +61,20 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:28.2.1')
     implementation 'com.google.firebase:firebase-analytics'
+    //implementation 'com.google.guava:guava:27.0.1-android'
+    //classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
+    //classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.5'
 }
+
+/*
+protobuf {
+    protoc {
+        // for apple m1, please add protoc_platform=osx-x86_64 in $HOME/.gradle/gradle.properties
+        if (project.hasProperty('protoc_platform')) {
+            artifact = "com.google.protobuf:protoc:3.13.0:${protoc_platform}"
+        } else {
+            artifact = "com.google.protobuf:protoc:3.13.0"
+        }
+    }
+}
+*/

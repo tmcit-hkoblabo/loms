@@ -12,6 +12,8 @@ class MyModel extends ChangeNotifier {
   String? number;
   String? belong;
   String? status;
+  List<String> bleLocation = [];
+  //String? status;
 
   void startLoading() {
     isLoading = true;
@@ -37,7 +39,9 @@ class MyModel extends ChangeNotifier {
     this.position = data?['position'];
     this.number = data?['number'];
     this.belong = data?['belong'];
-    //this.status = data?['status'];
+    this.status = data?['ble_location'][0]['ble_location'].toString();
+
+    notifyListeners();
   }
 
   Future logout() async {

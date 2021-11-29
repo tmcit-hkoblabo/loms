@@ -27,6 +27,9 @@ class EditProfileModel extends ChangeNotifier {
   String? position;
   String? number;
   String? belong;
+  String? bleLocation;
+  String? userStatus;
+  String? updateTime;
 
   //おそらく使わない
   void setName(String name) {
@@ -61,13 +64,42 @@ class EditProfileModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /*
+  void setStatus() {
+    List yourItemList = [];
+    for (int i = 0; i < itemName!.length; i++)
+      yourItemList.add({
+        //"ble_location": bleLocation.toList()[i],
+        //"status": name!.toList()[i],
+        //"update_time": quantity!.toList()[i]
+        "ble_location": bleLocation.toList()[i],
+        "status": name!.toList()[i],
+        "update_time": quantity!.toList()[i]
+      });
+  }
+  */
+
+  void setStatus() {
+    //this.bleLocation = bleLocation;
+    //this.userStatus = userStatus;
+    //this.updateTime = updateTime;
+    bleLocation = '5F東棟';
+    this.userStatus = 'オンライン';
+    this.updateTime = '9:32:32';
+
+    notifyListeners();
+  }
+
   bool isUpdated() {
     //return name != null || description != null;
     return description != null ||
         furigana != null ||
         position != null ||
         number != null ||
-        belong != null;
+        belong != null ||
+        bleLocation != null ||
+        userStatus != null ||
+        updateTime != null;
   }
 
   Future update() async {
@@ -87,6 +119,24 @@ class EditProfileModel extends ChangeNotifier {
       'position': position,
       'number': number,
       'belong': belong,
+      'status': [
+        {
+          'ble_location': bleLocation,
+          'user_status': userStatus,
+          'update_time': updateTime
+        }, //0
+        {
+          'ble_location': bleLocation,
+          'user_status': userStatus,
+          'update_time': updateTime
+        }, //1
+        {
+          'ble_location': bleLocation,
+          'user_status': userStatus,
+          'update_time': updateTime
+        }, //2
+      ],
+      'ble_location': bleLocation,
     });
   }
 }

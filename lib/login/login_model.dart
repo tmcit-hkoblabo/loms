@@ -19,9 +19,14 @@ class LoginModel extends ChangeNotifier {
   String? position;
   String? number;
   String? belong;
+  //String? bleLocation;
+  String? status;
   String? password;
+  List<String> bleLocation = ['', '', '', '', ''];
 
   bool isLoading = false;
+
+  //var bleLocation = ['東棟5F', '中央棟5F'];
 
   void startLoading() {
     isLoading = true;
@@ -57,15 +62,38 @@ class LoginModel extends ChangeNotifier {
 
   void setNumber(String number) {
     this.number = number;
-    belong = null;
+    this.belong = null;
     notifyListeners();
   }
 
   void setBelong(String belong) {
     this.belong = belong;
-    number = null;
+    this.number = null;
     notifyListeners();
   }
+
+  void setBleLocation(/*String bleLocation*/) {
+    //this.bleLocation = '東棟5F(試験的)';
+    //var array = new List();
+    bleLocation.insert(0, '1'); // [2, 4, 6, 8]
+    this.status = bleLocation[0];
+    //var bleLocation = ['東棟5F', '中央棟5F'];
+    notifyListeners();
+  }
+
+  /*
+  void setStatus(/*String status*/) {
+    //this.bleLocation = bleLocation;
+    //var bleLocation = ['a', 'c'];
+    //this.bleLocation = '東棟5F(試験的)';
+    var status = new Map();
+    status['ble_location'] = '東棟5F';
+    status['user_status'] = 'オンライン';
+    status['update_time'] = '10:37:32';
+
+    notifyListeners();
+  }
+  */
 
   //今の所使っていない
   Future login() async {
@@ -120,7 +148,9 @@ class LoginModel extends ChangeNotifier {
         'uid': uid,
         'image': image,
         'furigana': furigana,
-        'position': position
+        'position': position,
+        //'number': number,
+        //'belong': belong
       });
       /*
       await Navigator.of(context).pushReplacement(
@@ -174,6 +204,19 @@ class LoginModel extends ChangeNotifier {
       'position': position,
       'number': number,
       'belong': belong,
+      //'ble_location': bleLocation,
+      'status': status,
+      'ble_location': [
+        {
+          'ble_location': bleLocation[0],
+        }, //0
+        {
+          'ble_location': bleLocation[1],
+        }, //1
+        {
+          'ble_location': bleLocation[2],
+        }, //2
+      ]
     });
 
     //return TopPage2;
