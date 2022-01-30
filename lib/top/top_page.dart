@@ -2,9 +2,10 @@
 
 //import 'package:book_list_sample/add_book/add_book_page.dart';
 //import 'package:loms2/authentication/login_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loms2/mypage/my_page.dart';
 import 'package:loms2/top/top_model.dart';
-//import 'package:loms2/domain/book.dart';
+import 'package:loms2/domain/book.dart';
 //import 'package:loms2/edit_book/edit_book_page.dart';
 import 'package:loms2/login/login_page.dart';
 //import 'package:book_list_sample/mypage/my_page.dart';
@@ -20,38 +21,187 @@ class TopPage extends StatelessWidget {
     return ChangeNotifierProvider<TopModel>(
       create: (_) => TopModel()..fetchBookList(),
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Top'), //もともとは本一覧
-          actions: [
-            IconButton(
-              onPressed: () async {
-                // 画面遷移
-                if (FirebaseAuth.instance.currentUser != null) {
-                  print('ログインしている');
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPage(),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                } else {
-                  print('ログインしてない');
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignInOnGoogle(),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                }
-              },
-              icon: Icon(Icons.person),
-            ),
-          ],
-        ),
+          appBar: AppBar(
+            title: Text('Top'), //もともとは本一覧
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  // 画面遷移
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    print('ログインしている');
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPage(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  } else {
+                    print('ログインしてない');
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInOnGoogle(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  }
+                },
+                icon: Icon(Icons.person),
+              ),
+            ],
+          ),
+          /*
+        body: Center(
+          child: Consumer<TopModel>(builder: (context, model, child) {
+            final List<Ble>? books = model.books;
 
-        /*
+            if (books == null) {
+              return CircularProgressIndicator();
+            }
+            final List<Widget> widgets = books
+                .map(
+                  (book) => ListTile(
+                    title: Text(book.name.toString()),
+                    subtitle: Text(book.location.toString()),
+                  ),
+                )
+                .toList();
+
+            return ListView(
+              children: widgets,
+            );
+          }),
+        ),
+        */
+
+          body: Center(
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              // 指定したstreamにデータが流れてくると再描画される
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Consumer<TopModel>(builder: (context, model, child) {
+                    final List<Ble>? books = model.books;
+
+                    if (books == null) {
+                      return CircularProgressIndicator();
+                    }
+
+                    final List<Widget> widgets = books
+                        .map(
+                          (book) => ListTile(
+                            title: Text(book.name.toString()),
+                            subtitle: Text(book.location.toString()),
+                          ),
+                        )
+                        .toList();
+
+                    return ListView(
+                      children: widgets,
+                    );
+                  });
+                } else if (snapshot.hasError) {
+                  return Text('エラーだよ');
+                }
+                return Consumer<TopModel>(builder: (context, model, child) {
+                  final List<Ble>? books = model.books;
+
+                  if (books == null) {
+                    return CircularProgressIndicator();
+                  }
+
+                  final List<Widget> widgets = books
+                      .map(
+                        (book) => ListTile(
+                          title: Text(book.name.toString()),
+                          subtitle: Text(book.location.toString()),
+                        ),
+                      )
+                      .toList();
+
+                  return ListView(
+                    children: widgets,
+                  );
+                });
+              },
+            ),
+          )
+
+          /*
+          child: Consumer<TopModel>(builder: (context, model, child) {
+            //final List<Book>? books = model.books;
+            final List<Ble>? books = model.books;
+
+            if (books == null) {
+              return CircularProgressIndicator();
+            }
+
+            final List<Widget> widgets = books
+                .map(
+                  (book) => ListTile(
+                    title: Text(book.name.toString()),
+                    subtitle: Text(book.location.toString()),
+                  ),
+                )
+                .toList();
+
+            return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                builder: (context, snapshot) {
+              return ListView(
+                children: widgets,
+              );
+            });
+            /*
+            return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView(
+                  children: widgets,
+                );
+              } else if (snapshot.hasError) {
+                return Text('エラーだよ');
+              }
+              return ListView(
+                children: widgets,
+              );
+            });
+            */
+          }),
+        ),
+        */
+
+          /*
+        floatingActionButton:
+            Consumer<BookListModel>(builder: (context, model, child) {
+          return FloatingActionButton(
+            onPressed: () async {
+              // 画面遷移
+              final bool? added = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddBookPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+
+              if (added != null && added) {
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('本を追加しました'),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+
+              model.fetchBookList();
+            },
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          );
+        }),
+        */
+
+          //元データ
+          /*
         body: Center(
           child: Consumer<BookListModel>(builder: (context, model, child) {
             final List<Book>? books = model.books;
@@ -117,8 +267,6 @@ class TopPage extends StatelessWidget {
             );
           }),
         ),
-        */
-        /*
         floatingActionButton:
             Consumer<BookListModel>(builder: (context, model, child) {
           return FloatingActionButton(
@@ -147,7 +295,7 @@ class TopPage extends StatelessWidget {
           );
         }),
         */
-      ),
+          ),
     );
   }
 

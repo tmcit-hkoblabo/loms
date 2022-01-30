@@ -17,33 +17,15 @@ import 'package:provider/provider.dart';
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-//import 'dart:async';
-import 'dart:core';
+/*
+import 'dart:async';
 import 'dart:math';
-//import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:loms2/ble/ble_sample.dart';
-//import 'package:loms2/ble/ble_profile.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:loms2/mypage/ble_page.dart';
 
-//final FlutterBlue _flutterBlue = FlutterBlue.instance;
-
-/*
-Future scanDevices() async {
-  FlutterBlue.instance.startScan(
-    timeout: Duration(seconds: 4),
-  );
-  FlutterBlue.instance.stopScan();
-  return FlutterBlue.instance.scanResults
-      .where((scanResult) => scanResult.contains('5F'));
-  //.listen((scanResult) {
-  //   print("${scanResult.uuid.toString()}");
-  //.where((scanResult) => scanResult.device.name.contains('5F'));
-  //onDone: FlutterBlue.instance.stopScan);
-}
-*/
 
 class FlutterBlueApp extends StatelessWidget {
   @override
@@ -54,7 +36,7 @@ class FlutterBlueApp extends StatelessWidget {
           stream: FlutterBlue.instance.state,
           initialData: BluetoothState.unknown,
           builder: (c, snapshot) {
-            var state = snapshot.data;
+            final state = snapshot.data;
             if (state == BluetoothState.on) {
               return FindDevicesScreen();
             }
@@ -99,19 +81,6 @@ class BluetoothOffScreen extends StatelessWidget {
 //ここで検索をかける
 //トップページ
 class FindDevicesScreen extends StatelessWidget {
-  /*
-  void sortBle(int rssi) async {
-    FlutterBlue.instance.scanResults;
-    //final rssi = [4, 1, 2, 3];
-    rssi.sort();
-  }
-  */
-
-  /*
-  final int rssi;
-  FindDevicesScreen(this.rssi);
-  */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,84 +123,15 @@ class FindDevicesScreen extends StatelessWidget {
                       .toList(),
                 ),
               ),
-              StreamBuilder<List<ScanResult>>(
-                stream: FlutterBlue.instance.scanResults,
-                initialData: [],
-                //sortBle(rssi),
-                /*
-                builder: (_, snapshot) => Column(
-                  final sortName = snapshot.data!.where((r) => r.device.name.contains('5F'));
-                  //final sortName = device.name.where((user) => device.name.contains('5F_East_3'));
-                ),
-                */
-                //大きい順にRSSIを配置する
-                //先頭の値を取得する// [3, 9]
-
-                builder: (c, snapshot) => Column(
-                  children: snapshot.data!
-                      //.where((r) =>
-                      //    (r.device.name.contains('5F')) &&
-                      //    (r.rssi.fold<int>(min))) //少しでもキーワードが含まれていればOK
-                      //var scan = r.firstWhere((r) => r.device.name.startsWith('5F'))
-                      //.firstWhere((r) => r.device.name.startsWith('5F'))
-                      //.where((r) => r.device.name.contains('5F_East_3'))
-
-                      .where((scanResult) =>
-                          scanResult.device.name.contains('5F_'))
-                      /*
-                        .where((scanResult) =>
-                            scanResult.advertisementData.serviceUuids
-                                .where((item) => (item ==
-                                        NigirukunServicesProfile
-                                            .NIGIRUKUN_SERVICE ||
-                                    item.toLowerCase() ==
-                                        NigirukunServicesProfile
-                                            .NIGIRUKUN_SERVICE))
-                                .length >
-                            0)
-                        */
-                      //.where((scanResult) => scanResult.advertisementData.connectable)
-
-                      //.where((scanResult) => scanResult.advertisementData.)
-                      //.where((r) => r.rssi.toInt().reduce(max))
-                      //.sort((scanRusult) => scanResult.device.name)
-                      // fruits.sort((a, b) => getPrice(a).compareTo(getPrice(b)));
-                      //scanResult.sort((a, b) => a.compareTo(b))
-                      //.sort((a, b) => a.length.compareTo(b.length))
-                      //.reduce((curr, next) => curr > next ? curr : next)
-                      .map(
-                        (scanResult) => ScanResultTile(
-                          result: scanResult,
-                        ),
-                      )
-                      .toList()
-                    ..sort((a, b) => b.result.rssi.compareTo(a.result.rssi)),
-                  //..reduce(max).result,
-                  //..take(1),
-                  //..elementAt((result.rssi) => (0)),
-                  //..first.result.rssi,
-                ),
-              ),
-              /*
-              StreamBuilder<List<ScanResult>>(
-                stream: FlutterBlue.instance.scanResults,
+              
+              StreamBuilder<List<>>(
+                stream: scanDevices(),
                 initialData: [],
                 builder: (c, snapshot) => Column(
                   children: snapshot.data!
-                      .map(
-                        (r) => ScanResultTile(
-                          result: r,
-                          onTap: () => Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            r.device.connect();
-                            return DeviceScreen(device: r.device);
-                          })),
-                        ),
-                      )
-                      .toList(),
+                      
                 ),
               ),
-              */
             ],
           ),
         ),
@@ -683,4 +583,5 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+*/
 */

@@ -13,6 +13,23 @@ class ScanResultTile extends StatelessWidget {
   final ScanResult result;
   final VoidCallback? onTap;
 
+  Future setLocation(result) async {
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    // 日時を取得
+    //final pushedAt = DateTime.now().toIso8601String();
+    // 保存データを作成
+    //final countData = json.encode({
+    //  'count': count,
+    //  'pushedAt': pushedAt,
+    //});
+    // Stringとして保存
+    //var scanList = result;
+    //this.result.where((scanResult) => scanResult.device.name.contains('5F'));
+    //this.result.sort((a, b) => b.result.rssi.compareTo(a.result.rssi));
+    //return result.first;
+    //await prefs.setString('countData', sort1);
+  }
+
   Widget _buildTitle(BuildContext context) {
     if (result.device.name.length > 0) {
       return Column(
@@ -58,6 +75,8 @@ class ScanResultTile extends StatelessWidget {
       ),
     );
   }
+
+  
 
   String getNiceHexArray(List<int> bytes) {
     return '[${bytes.map((i) => i.toRadixString(16).padLeft(2, '0')).join(', ')}]'

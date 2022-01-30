@@ -1,13 +1,15 @@
-/*
 import 'dart:async';
+import 'dart:convert';
 import 'dart:core';
+//import 'package:flutter_blue/gen/flutterblue.pbserver.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
 import 'package:loms2/ble/ble_peripheral.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loms2/ble/ble_profile.dart';
-import 'package:loms2/ble/ble_sensor_data.dart';
+//import 'package:loms2/ble/ble_sensor_data.dart';
 
 class CentralManager {
   /// Singleton
@@ -20,23 +22,27 @@ class CentralManager {
 
   /// private variables
   final FlutterBlue _flutterBlue = FlutterBlue.instance;
-  NigirukunPeripheral _peripheral;
-  StreamSubscription _scanSubscription;
-  StreamSubscription<BluetoothDeviceState> _deviceConnection;
+  NigirukunPeripheral? _peripheral;
+  StreamSubscription? _scanSubscription;
+  //StreamSubscription<BluetoothDeviceState> _deviceConnection;
   PublishSubject<ScanResult> _scanSubject = PublishSubject<ScanResult>();
-  PublishSubject<BluetoothDeviceState> _deviceStateSubject =
-      PublishSubject<BluetoothDeviceState>();
-  PublishSubject<NigirukunCountSensorData> _countStream =
-      PublishSubject<NigirukunCountSensorData>();
-  PublishSubject<NigirukunForceSensorData> _forceStream =
-      PublishSubject<NigirukunForceSensorData>();
+  //PublishSubject<BluetoothDeviceState> _deviceStateSubject =
+  //    PublishSubject<BluetoothDeviceState>();
+  //PublishSubject<NigirukunCountSensorData> _countStream =
+  //    PublishSubject<NigirukunCountSensorData>();
+  //PublishSubject<NigirukunForceSensorData> _forceStream =
+  //    PublishSubject<NigirukunForceSensorData>();
 
   /// connected device. if it's not connected, device will return null
-  NigirukunPeripheral get peripheral => _peripheral;
+  NigirukunPeripheral? get peripheral => _peripheral;
 
   /// scan result data
   /// rx stream scanResult can subscribe when discovered NIGIRUKUN device
   Stream<NigirukunPeripheral> get scannedDevice => _scanSubject.stream
+      //.where((scanResult) => scanResult.device.name.contains('5F'))
+      //.where((scanResult) => scanResult.rssi.reduce(max))
+      //.sort((a, b) => b.scanResult.rssi.compareTo(a.scanResult.rssi))
+      //.sort((a, b) => b.result.rssi.compareTo(a.result.rssi))
       .where((scanResult) => scanResult.advertisementData.connectable)
       .where((scanResult) =>
           scanResult.advertisementData.serviceUuids
@@ -46,22 +52,33 @@ class CentralManager {
                           NigirukunServicesProfile.NIGIRUKUN_SERVICE))
               .length >
           0)
-      .map((scanResult) => NigirukunPeripheral.scanResult(scanResult))
-      .distinct(([a, b]) => a.uuid == b.uuid);
+      .map((scanResult) => NigirukunPeripheral.scanResult(scanResult));
+
+  Future<void> getLocation(ScanResult scanResult) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // 日時を取得
+    //final pushedAt = DateTime.now().toIso8601String();
+    // 保存データを作成
+    final countData = json.encode(NigirukunPeripheral.scanResult(scanResult));
+    // Stringとして保存
+    await prefs.setString('countData', countData);
+  }
+  //.sort((a, b) => b.result.rssi.compareTo(a.result.rssi));
+  //.distinct(([a, b]) => a.uuid == b.uuid);
 
   /// connected bluetooth device state
   /// rx stream BluetoothDeviceState can subscribe when changed connection state
-  Stream<BluetoothDeviceState> get deviceState => _deviceStateSubject.stream;
+  //Stream<BluetoothDeviceState> get deviceState => _deviceStateSubject.stream;
 
-  Stream<NigirukunCountSensorData> get countStream => _countStream.stream;
+  //Stream<NigirukunCountSensorData> get countStream => _countStream.stream;
 
-  Stream<NigirukunForceSensorData> get forceStream => _forceStream.stream;
+  //Stream<NigirukunForceSensorData> get forceStream => _forceStream.stream;
 
-  Future<double> get getWeight => peripheral?.readThresh();
+  //Future<double> get getWeight => peripheral?.readThresh();
 
   /// scan devices which has unique NIGIRUKUN service uuid
   /// - parameter timeout: [default 10 seconds] duration of scanning
-  void startDeviceScan([int timeout = 10]) {
+  void startDeviceScan([int timeout = 4]) {
     if (_scanSubject.isClosed) {
       _scanSubject = PublishSubject<ScanResult>();
     }
@@ -115,4 +132,3 @@ class CentralManager {
   }
   */
 }
-*/

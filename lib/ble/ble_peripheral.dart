@@ -1,12 +1,10 @@
-/*
 import 'dart:async';
 import 'dart:core';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart/subjects.dart';
+//import 'package:rxdart/subjects.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:loms2/ble/ble_processor.dart';
-import 'package:loms2/ble/ble_sensor_data.dart';
-
+//import 'package:loms2/ble/ble_processor.dart';
+//import 'package:loms2/ble/ble_sensor_data.dart';
 
 final streamController = StreamController<String>();
 final streamObservable = PublishConnectableStream(streamController.stream);
@@ -14,12 +12,12 @@ final streamObservable = PublishConnectableStream(streamController.stream);
 class NigirukunPeripheral {
   /// private variables
   BluetoothDevice? _rawPeripheral;
-  BluetoothCharacteristic? _threshCharacteristic;
-  StreamSubscription<BluetoothDeviceState>? _deviceStateSubscription;
-  PublishSubject<BluetoothService>? _serviceStream =
-      PublishSubject<BluetoothService>();
-  PublishSubject<List<double>> _forceStream = PublishSubject<List<double>>();
-  PublishSubject<int> _countStream = PublishSubject<int>();
+  //BluetoothCharacteristic? _threshCharacteristic;
+  //StreamSubscription<BluetoothDeviceState>? _deviceStateSubscription;
+  //PublishSubject<BluetoothService>? _serviceStream =
+  //    PublishSubject<BluetoothService>();
+  //PublishSubject<List<double>> _forceStream = PublishSubject<List<double>>();
+  //PublishSubject<int> _countStream = PublishSubject<int>();
 
   /// NIGIRUUN unique uuid
   String? uuid;
@@ -29,16 +27,15 @@ class NigirukunPeripheral {
 
   /// stream 4-finger force data
   /// rx stream data
-  Stream<NigirukunForceSensorData> get forceStream =>
-      _forceStream.stream.map((data) => NigirukunForceSensorData.force(data));
+  //Stream<NigirukunForceSensorData> get forceStream =>
+  //    _forceStream.stream.map((data) => NigirukunForceSensorData.force(data));
 
   /// stream count data
   /// rx stream data
-  Stream<NigirukunCountSensorData> get countStream =>
-      _countStream.stream.map((count) => NigirukunCountSensorData.count(count));
+  //Stream<NigirukunCountSensorData> get countStream =>
+  //    _countStream.stream.map((count) => NigirukunCountSensorData.count(count));
 
-  //TODO it should be private parameter
-  BluetoothDevice get rawPeripheral => _rawPeripheral;
+  BluetoothDevice? get rawPeripheral => _rawPeripheral;
 
   /// constructor for device
   /// - parameter peripheral: the device that BluetoothDevice
@@ -176,4 +173,3 @@ class NigirukunPeripheral {
   }
   */
 }
-*/

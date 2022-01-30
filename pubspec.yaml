@@ -39,6 +39,9 @@ dependencies:
   quiver: ^3.0.1+1
   flutter_slidable: ^1.1.0
   flutter_blue: ^0.8.0
+  sort: ^0.0.2
+  path_provider: ^2.0.8
+  #flutter_blue_beacon: ^0.0.2
 
 dev_dependencies:
   flutter_test:

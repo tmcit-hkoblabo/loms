@@ -1,3 +1,6 @@
+//import 'package:loms2/ble/ble_main.dart';
+import 'dart:ffi';
+
 import 'package:loms2/ble/ble_model.dart';
 import 'package:loms2/edit_profile/edit_profile_page.dart';
 import 'package:loms2/mypage/my_model.dart';
@@ -67,6 +70,10 @@ class MyPage extends StatelessWidget {
                         model.status ?? '所在情報なし',
                       ),
 
+                      Text(
+                        model.ble ?? 'bleなし',
+                      ),
+
                       //ここに所在情報も一旦表示させるようにする
                       TextButton(
                         onPressed: () async {
@@ -77,9 +84,31 @@ class MyPage extends StatelessWidget {
                         child: Text('ログアウト'),
                       ),
 
+                      /*
                       TextButton(
                         onPressed: () async {
                           // ログアウト
+                          await model.scanBle();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('BLE1'),
+                      ),
+                      */
+
+                      TextButton(
+                        onPressed: () async {
+                          // ログアウト
+                          //Array a = await model.scanDevices();
+                          await model.scanDevices();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('BLE0'),
+                      ),
+
+                      TextButton(
+                        onPressed: () async {
+                          // ログアウト
+
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -87,9 +116,11 @@ class MyPage extends StatelessWidget {
                               fullscreenDialog: true,
                             ),
                           );
+
+                          //await model.scanDevices();
                         },
                         child: Text('BLE'),
-                      )
+                      ),
                     ],
                   ),
                 ),

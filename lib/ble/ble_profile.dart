@@ -1,6 +1,8 @@
 class NigirukunServicesProfile {
   static const String NIGIRUKUN_SERVICE =
-      "1db31f9a-9137-44da-9458-a4e642211773";
+      'b76aae08-4cbe-4cc4-8386-f96d98565374'; //5F_East3
+  //"495b7035-ef2d-42fe-95da-95d7d3f22032"; //5F_East4
+
 }
 
 class NigirukunCharacteristicProfile {

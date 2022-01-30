@@ -23,6 +23,7 @@ class LoginModel extends ChangeNotifier {
   String? status;
   String? password;
   List<String> bleLocation = ['', '', '', '', ''];
+  String? location;
 
   bool isLoading = false;
 
@@ -216,7 +217,8 @@ class LoginModel extends ChangeNotifier {
         {
           'ble_location': bleLocation[2],
         }, //2
-      ]
+      ],
+      'location': location
     });
 
     //return TopPage2;

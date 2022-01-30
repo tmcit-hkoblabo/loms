@@ -1,5 +1,4 @@
 //import 'dart:js';
-import 'dart:async';
 import 'dart:math';
 
 import 'dart:convert';
@@ -64,36 +63,10 @@ class MyModel extends ChangeNotifier {
     this.position = data?['position'];
     this.number = data?['number'];
     this.belong = data?['belong'];
-    //this.status = data?['ble_location'][0]['ble_location'].toString();
+    this.status = data?['ble_location'][0]['ble_location'].toString();
     //this.ble = prefs.getString('countData');
     notifyListeners();
   }
-
-  /*
-  Future scanBle() async {
-    BleWave bleWave = BleWave();
-    Map<int, String> scanResults = new Map();
-
-    //BLEを検索
-    FlutterBlue.instance
-        .scan(timeout: Duration(seconds: 1))
-        .listen((scanResult) async {
-      scanResults[scanResult.rssi] = scanResult.device.name;
-      return scanResults;
-      final map1 = <int, String>{
-        scanResult.rssi: scanResult.device.name,
-      };
-      //print(map1);
-    });
-    FlutterBlue.instance.stopScan();
-    //print(map1);
-    notifyListeners();
-  }
-  */
-
-  Map<int, String> map2 = {};
-
-  Future sortBle() async {}
 
   Future scanDevices() async {
     //FlutterBlue.instance.startScan(
@@ -106,43 +79,44 @@ class MyModel extends ChangeNotifier {
     //device = FlutterBlue.instance.scanResults;
     //print('${device.name} found! rssi: ${scanResult.rssi}');
     //Map<String, ScanResult> scanResults = new Map();
-    //BleWave bleWave = BleWave();
-    //Map<int, String> scanResults = new Map();
+    BleWave bleWave = BleWave();
+    Map<int, String> scanResults = new Map();
     //var scanResults = new Map();
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-    StreamSubscription<ScanResult> scanSubscription;
-    var ans = null;
-    var max = 0;
 
-    scanSubscription = FlutterBlue.instance
+    FlutterBlue.instance
         .scan(timeout: Duration(seconds: 1))
-        .listen((scanResult) {
-      //print(scanResult.device.name.toString());
-      //scanResults[scanResult.rssi] = scanResult.device.name;
-
+        .listen((scanResult) async {
       if (scanResult.device.name.toString().contains('5F_')) {
         //scanResults[scanResult.device.name] = scanResult;
-        //scanResults[scanResult.rssi] = scanResult.device.name;
+        scanResults[scanResult.rssi] = scanResult.device.name;
         //この時点で別のところに作ったリストもしくはマップにデータを追加する処理を書けばいい
         //BleWave(bleWave.bleResults: scanResults);
-        //scanResults.addAll(bleWave.bleResults);
+        scanResults.addAll(bleWave.bleResults);
         //scanResults.addAll(setMap().bleResults);
-
+        /*
         print('順位変動前:');
+        print(scanResults);
 
-        if (ans == null || scanResult.rssi > max) {
-          print('abc');
-          ans = scanResult.device.name;
-          max = scanResult.rssi;
-          print(ans);
-          print('max' + max.toString());
-          FirebaseFirestore.instance.collection('users').doc(uid).update(
-            {
-              'location': ans,
-              //'job': engineers,
-            },
-          );
-        }
+        var thevalue = 0;
+        var thekey;
+
+        scanResults.forEach((k, v) {
+          scanResults.values.map((e) => k).reduce(max);
+          if (k > thevalue) {
+            thevalue = k;
+            thekey = v;
+          }
+        });
+        */
+
+        //scanResults.removeWhere((key, value) => key < key.reduce(max));
+
+        //print(thekey);
+        //print(scanResults);
+        //print(
+        //    "found! Attempting to connect" + scanResult.device.name.toString());
+      } else {
+        scanResults.clear();
       }
 
       /*
@@ -160,7 +134,8 @@ class MyModel extends ChangeNotifier {
       await prefs.setString('bleData', bleData);
       */
 
-      /*
+      //FlutterBlue.instance.stopScan();
+
       var list5 = [
         //List<Map<String, dynamic>> list5 = [
         {
@@ -168,7 +143,6 @@ class MyModel extends ChangeNotifier {
           'device_name': scanResult.device.name.toString()
         },
       ];
-      */
 
       /*
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -246,15 +220,7 @@ class MyModel extends ChangeNotifier {
       //print(list7.first);
       //print('個数は ${list6.length}');
       //notifyListeners();
-    }, onDone: () => FlutterBlue.instance.stopScan());
-
-    /*
-    stopScan() {
-      FlutterBlue.instance.stopScan();
-      scanSubscription.cancel();
-      //scanSubscription = null;
-    }
-    */
+    });
 
     //return FlutterBlue.instance.scanResults
     //    .where((scanResult) => scanResult.contains('5F'));
@@ -303,11 +269,9 @@ class MyModel extends ChangeNotifier {
       });
       */
 
-    print(ans);
-    print(max);
-
-    //print(scanResults);
-    //print(bleWave.bleResults);
+    FlutterBlue.instance.stopScan();
+    print('end');
+    print(bleWave.bleResults);
 
     //var list10 = [];
     /*
