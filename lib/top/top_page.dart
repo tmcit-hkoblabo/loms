@@ -2,7 +2,10 @@
 
 //import 'package:book_list_sample/add_book/add_book_page.dart';
 //import 'package:loms2/authentication/login_page.dart';
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:loms2/mypage/my_page.dart';
 import 'package:loms2/top/top_model.dart';
 import 'package:loms2/domain/book.dart';
@@ -15,6 +18,152 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
+class Clock extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ClockState();
+  }
+}
+
+class _ClockState extends State<Clock> {
+  //String _time = '';
+
+  @override
+  void initState() {
+    Timer.periodic(
+      Duration(seconds: 10),
+      _onTimer,
+    );
+    super.initState();
+  }
+
+  void _onTimer(Timer timer) {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    StreamSubscription<ScanResult> scanSubscription;
+    var ans = null;
+    var max = 0;
+
+    scanSubscription = FlutterBlue.instance
+        .scan(timeout: Duration(seconds: 1))
+        .listen((scanResult) {
+      //print(scanResult.device.name.toString());
+      //scanResults[scanResult.rssi] = scanResult.device.name;
+
+      if (scanResult.device.name.toString().contains('5F_')) {
+        print('順位変動前:');
+
+        if (ans == null || scanResult.rssi > max) {
+          print('abc');
+          ans = scanResult.device.name;
+          max = scanResult.rssi;
+          print(ans);
+          FirebaseFirestore.instance.collection('users').doc(uid).update(
+            {
+              'location': ans,
+            },
+          );
+        }
+      }
+    }, onDone: () => FlutterBlue.instance.stopScan());
+    /*
+    var now = DateTime.now();
+    var formatter = DateFormat('HH:mm:ss');
+    var formattedTime = formatter.format(now);
+    setState(() => _time = formattedTime);
+    */
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<TopModel>(
+      create: (_) => TopModel()..fetchBookList(),
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Top'), //もともとは本一覧
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  // 画面遷移
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    print('ログインしている');
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPage(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  } else {
+                    print('ログインしてない');
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInOnGoogle(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  }
+                },
+                icon: Icon(Icons.person),
+              ),
+            ],
+          ),
+          body: Center(
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              // 指定したstreamにデータが流れてくると再描画される
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Consumer<TopModel>(builder: (context, model, child) {
+                    final List<Ble>? books = model.books;
+
+                    if (books == null) {
+                      return CircularProgressIndicator();
+                    }
+
+                    final List<Widget> widgets = books
+                        .map(
+                          (book) => ListTile(
+                            title: Text(book.name.toString()),
+                            subtitle: Text(book.location.toString()),
+                          ),
+                        )
+                        .toList();
+
+                    return ListView(
+                      children: widgets,
+                    );
+                  });
+                } else if (snapshot.hasError) {
+                  return Text('エラーだよ');
+                }
+                return Consumer<TopModel>(builder: (context, model, child) {
+                  final List<Ble>? books = model.books;
+
+                  if (books == null) {
+                    return CircularProgressIndicator();
+                  }
+
+                  final List<Widget> widgets = books
+                      .map(
+                        (book) => ListTile(
+                          title: Text(book.name.toString()),
+                          subtitle: Text(book.location.toString()),
+                        ),
+                      )
+                      .toList();
+
+                  return ListView(
+                    children: widgets,
+                  );
+                });
+              },
+            ),
+          )),
+    );
+  }
+}
+
+/*
 class TopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -337,3 +486,4 @@ class TopPage extends StatelessWidget {
     );
   }*/
 }
+*/

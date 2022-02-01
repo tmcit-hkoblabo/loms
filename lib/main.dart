@@ -192,7 +192,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TMCIT LoMS',
-      home: TopPage(),
+      //home: TopPage(),
+      home: Clock(),
     );
   }
 }

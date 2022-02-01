@@ -135,7 +135,6 @@ class MyModel extends ChangeNotifier {
           ans = scanResult.device.name;
           max = scanResult.rssi;
           print(ans);
-          print('max' + max.toString());
           FirebaseFirestore.instance.collection('users').doc(uid).update(
             {
               'location': ans,
